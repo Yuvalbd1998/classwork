@@ -1,0 +1,22 @@
+---
+-  
+  hosts: all
+  user: docker
+  become: yes
+
+  tasks:
+    
+    - name: Copy the script to the server
+      copy:        
+        src: check_distro.sh      
+        dest: /tmp/check_distro.sh 
+        mode: '0755'
+
+    - name: Run the script
+      command: /tmp/check_distro.sh
+      register: distro_output
+
+
+    - name: Display the output     
+      debug:
+        var: distro_output.stdout
